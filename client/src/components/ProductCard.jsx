@@ -24,7 +24,7 @@ const ProductCard = ({ product, onDelete }) => {
   
   return (
     <>
-      <div className="card group">
+      <div className="card group overflow-hidden">
         <div className="flex justify-between items-start mb-3">
           <h3 className="font-semibold text-lg text-gray-900 group-hover:text-primary-600 transition duration-200">{product.name}</h3>
           <button 
@@ -58,7 +58,7 @@ const ProductCard = ({ product, onDelete }) => {
           </div>
         </div>
         
-        <div className="pt-3 border-t border-gray-100 text-xs text-gray-500 flex justify-between items-center">
+        <div className="pt-3 border-t border-gray-100 text-xs text-gray-500">
           <span>Added on {formattedDate}</span>
         </div>
       </div>

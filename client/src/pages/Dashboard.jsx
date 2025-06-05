@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
-import { RiSearchLine, RiFilterLine, RiAddLine, RiRefreshLine } from 'react-icons/ri'
+import { RiSearchLine, RiFilterLine, RiAddLine, RiRefreshLine, RiInformationLine } from 'react-icons/ri'
 import { getProducts, getCategories, deleteProduct } from '../services/api'
 import { MultiSelect } from 'react-multi-select-component'
 import Pagination from '../components/Pagination'
@@ -93,23 +93,62 @@ const Dashboard = () => {
 
   return (
     <div>
-      {/* Header Section */}
-      <div className="mb-10">
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-4 sm:space-y-0 mb-6">
-          <h1 className="section-heading">Product Inventory</h1>
-          <Link to="/products/add" className="btn btn-primary flex items-center justify-center sm:justify-start">
-            <RiAddLine className="mr-2" />
-            Add New Product
-          </Link>
+      {/* Header Section with animated gradient */}
+      <div className="relative overflow-hidden rounded-3xl mb-10">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-600 to-secondary-500 opacity-90"></div>
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+        <div className="relative px-6 py-12 sm:px-10 sm:py-16">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-4 sm:space-y-0">
+            <div>
+              <h1 className="text-3xl sm:text-4xl font-bold text-white font-display mb-2">Product Inventory</h1>
+              <p className="text-white/80 max-w-2xl">
+                Manage your products efficiently. Search, filter, and organize your inventory.
+              </p>
+            </div>
+
+          </div>
+          
+          {/* Stats overview */}
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="bg-white/20 backdrop-blur-sm rounded-xl px-4 py-3 text-white border border-white/30">
+              <div className="flex items-center">
+                <span className="bg-white/90 p-2 rounded-lg mr-3">
+                  <RiInformationLine className="text-primary-600" />
+                </span>
+                <div>
+                  <p className="text-xs uppercase tracking-wide">Total Products</p>
+                  <p className="text-2xl font-bold">{pagination.totalProducts || 0}</p>
+                </div>
+              </div>
+            </div>
+            <div className="bg-white/20 backdrop-blur-sm rounded-xl px-4 py-3 text-white border border-white/30">
+              <div className="flex items-center">
+                <span className="bg-white/90 p-2 rounded-lg mr-3">
+                  <RiFilterLine className="text-primary-600" />
+                </span>
+                <div>
+                  <p className="text-xs uppercase tracking-wide">Categories</p>
+                  <p className="text-2xl font-bold">{categories.length}</p>
+                </div>
+              </div>
+            </div>
+            <div className="bg-white/20 backdrop-blur-sm rounded-xl px-4 py-3 text-white border border-white/30">
+              <div className="flex items-center">
+                <span className="bg-white/90 p-2 rounded-lg mr-3">
+                  <RiSearchLine className="text-primary-600" />
+                </span>
+                <div>
+                  <p className="text-xs uppercase tracking-wide">Current Page</p>
+                  <p className="text-2xl font-bold">{pagination.currentPage} / {pagination.totalPages}</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <p className="text-gray-600 max-w-3xl">
-          Manage your product inventory efficiently. Add, search, filter, and delete products with ease. 
-          Our system ensures you have full control over your inventory data.
-        </p>
       </div>
 
       {/* Search & Filter Card */}
-      <div className="card mb-8 border-t-4 border-t-primary-500">
+      <div className="card mb-8 border-none shadow-lg">
         <div className="flex flex-col md:flex-row md:items-end space-y-6 md:space-y-0 md:space-x-6">
           <div className="flex-1">
             <label htmlFor="search" className="form-label flex items-center">
@@ -166,7 +205,7 @@ const Dashboard = () => {
                 setSelectedCategories([]);
                 setTimeout(() => fetchProducts(1), 0);
               }} 
-              className="text-sm flex items-center text-primary-600 hover:text-primary-800"
+              className="text-sm flex items-center text-primary-600 hover:text-primary-800 hover:bg-primary-50 px-2 py-1 rounded-full"
             >
               <RiRefreshLine className="mr-1" /> Clear filters
             </button>
