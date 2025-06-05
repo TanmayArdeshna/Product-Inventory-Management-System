@@ -52,8 +52,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange, totalItems, itemsPe
   const endItem = Math.min(currentPage * itemsPerPage, totalItems)
 
   return (
-    <div className="flex flex-col sm:flex-row justify-between items-center border-t border-gray-200 pt-6 mt-4">
-      <div className="text-sm text-gray-600 mb-4 sm:mb-0">
+    <div className="flex flex-col sm:flex-row justify-between items-center border-t border-gray-200 pt-6 mt-8">
+      <div className="text-sm text-gray-600 mb-4 sm:mb-0 bg-white px-4 py-2 rounded-full shadow-sm">
         Showing <span className="font-medium">{startItem}</span> to <span className="font-medium">{endItem}</span> of{' '}
         <span className="font-medium">{totalItems}</span> products
       </div>
@@ -62,27 +62,27 @@ const Pagination = ({ currentPage, totalPages, onPageChange, totalItems, itemsPe
         <button
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className={`px-2 py-2 rounded-md ${
+          className={`p-2 rounded-full ${
             currentPage === 1
               ? 'text-gray-300 cursor-not-allowed'
-              : 'text-gray-500 hover:bg-gray-100'
+              : 'text-gray-700 hover:bg-primary-100 hover:text-primary-700'
           }`}
           aria-label="Previous page"
         >
-          <RiArrowLeftSLine size={18} />
+          <RiArrowLeftSLine size={20} />
         </button>
 
         {pageNumbers.map((page, index) => (
           page === '...' ? (
-            <span key={`ellipsis-${index}`} className="px-3 py-2 text-gray-400">...</span>
+            <span key={`ellipsis-${index}`} className="px-2 py-1 text-gray-400">...</span>
           ) : (
             <button
               key={`page-${page}`}
               onClick={() => onPageChange(page)}
-              className={`px-3 py-1 rounded-md ${
+              className={`w-10 h-10 flex items-center justify-center rounded-full transition-all duration-200 ${
                 currentPage === page
-                  ? 'bg-primary-100 text-primary-700 font-medium'
-                  : 'text-gray-500 hover:bg-gray-100'
+                  ? 'bg-primary-600 text-white font-medium shadow-md'
+                  : 'text-gray-700 hover:bg-primary-100 hover:text-primary-700'
               }`}
             >
               {page}
@@ -93,14 +93,14 @@ const Pagination = ({ currentPage, totalPages, onPageChange, totalItems, itemsPe
         <button
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className={`px-2 py-2 rounded-md ${
+          className={`p-2 rounded-full ${
             currentPage === totalPages
               ? 'text-gray-300 cursor-not-allowed'
-              : 'text-gray-500 hover:bg-gray-100'
+              : 'text-gray-700 hover:bg-primary-100 hover:text-primary-700'
           }`}
           aria-label="Next page"
         >
-          <RiArrowRightSLine size={18} />
+          <RiArrowRightSLine size={20} />
         </button>
       </nav>
     </div>

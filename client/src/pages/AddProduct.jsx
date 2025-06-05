@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
-import { RiArrowLeftLine, RiSaveLine } from 'react-icons/ri'
+import { RiArrowLeftLine, RiSaveLine, RiErrorWarningLine } from 'react-icons/ri'
 import { getCategories, createProduct } from '../services/api'
 import { MultiSelect } from 'react-multi-select-component'
 import LoadingSpinner from '../components/LoadingSpinner'
@@ -110,113 +110,155 @@ const AddProduct = () => {
     }
   }
 
-  if (loading) {
-    return (
-      <div className="flex justify-center my-12">
-        <LoadingSpinner />
-      </div>
-    )
-  }
-
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="max-w-3xl mx-auto">
       <div className="flex items-center mb-8">
         <button 
           onClick={() => navigate('/products')} 
-          className="mr-4 text-gray-500 hover:text-gray-700"
+          className="mr-4 text-gray-500 hover:text-gray-700 bg-white rounded-full p-2 hover:bg-gray-100 transition"
+          aria-label="Go back"
         >
           <RiArrowLeftLine size={20} />
         </button>
-        <h1 className="text-2xl font-bold text-gray-900">Add New Product</h1>
+        <h1 className="section-heading">Add New Product</h1>
       </div>
 
-      <div className="card">
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label htmlFor="name" className="form-label">
-              Product Name <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className={`form-input ${errors.name ? 'border-red-500' : ''}`}
-              placeholder="Enter product name"
-            />
-            {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name}</p>}
+      <div className="card border-t-4 border-t-secondary-500">
+        {loading ? (
+          <div className="flex justify-center py-12">
+            <LoadingSpinner />
           </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label htmlFor="name" className="form-label flex items-center">
+                  Product Name <span className="text-red-500 ml-1">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className={`form-input ${errors.name ? 'border-red-500 bg-red-50' : ''}`}
+                  placeholder="Enter product name"
+                />
+                {errors.name && (
+                  <div className="mt-2 text-sm text-red-600 flex items-start">
+                    <RiErrorWarningLine className="mr-1 mt-0.5 flex-shrink-0" />
+                    <span>{errors.name}</span>
+                  </div>
+                )}
+              </div>
 
-          <div>
-            <label htmlFor="description" className="form-label">
-              Description <span className="text-red-500">*</span>
-            </label>
-            <textarea
-              id="description"
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              className={`form-input min-h-[100px] ${errors.description ? 'border-red-500' : ''}`}
-              placeholder="Enter product description"
-            ></textarea>
-            {errors.description && <p className="mt-1 text-sm text-red-600">{errors.description}</p>}
-          </div>
+              <div>
+                <label htmlFor="quantity" className="form-label flex items-center">
+                  Quantity <span className="text-red-500 ml-1">*</span>
+                </label>
+                <input
+                  type="number"
+                  id="quantity"
+                  name="quantity"
+                  value={formData.quantity}
+                  onChange={handleChange}
+                  min="0"
+                  className={`form-input ${errors.quantity ? 'border-red-500 bg-red-50' : ''}`}
+                  placeholder="Enter quantity"
+                />
+                {errors.quantity && (
+                  <div className="mt-2 text-sm text-red-600 flex items-start">
+                    <RiErrorWarningLine className="mr-1 mt-0.5 flex-shrink-0" />
+                    <span>{errors.quantity}</span>
+                  </div>
+                )}
+              </div>
+            </div>
 
-          <div>
-            <label htmlFor="quantity" className="form-label">
-              Quantity <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="number"
-              id="quantity"
-              name="quantity"
-              value={formData.quantity}
-              onChange={handleChange}
-              min="0"
-              className={`form-input ${errors.quantity ? 'border-red-500' : ''}`}
-              placeholder="Enter quantity"
-            />
-            {errors.quantity && <p className="mt-1 text-sm text-red-600">{errors.quantity}</p>}
-          </div>
-
-          <div>
-            <label className="form-label">
-              Categories <span className="text-red-500">*</span>
-            </label>
-            <MultiSelect
-              options={categoryOptions}
-              value={selectedCategories}
-              onChange={setSelectedCategories}
-              labelledBy="Select categories"
-              className={`${errors.categories ? 'border-red-500' : ''}`}
-            />
-            {errors.categories && <p className="mt-1 text-sm text-red-600">{errors.categories}</p>}
-          </div>
-
-          <div className="pt-4">
-            <button
-              type="submit"
-              disabled={submitting}
-              className="btn btn-primary w-full flex items-center justify-center"
-            >
-              {submitting ? (
-                <>
-                  <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  Saving...
-                </>
-              ) : (
-                <>
-                  <RiSaveLine className="mr-2" />
-                  Add Product
-                </>
+            <div>
+              <label htmlFor="description" className="form-label flex items-center">
+                Description <span className="text-red-500 ml-1">*</span>
+              </label>
+              <textarea
+                id="description"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                className={`form-input min-h-[120px] resize-none ${errors.description ? 'border-red-500 bg-red-50' : ''}`}
+                placeholder="Enter product description"
+              ></textarea>
+              {errors.description && (
+                <div className="mt-2 text-sm text-red-600 flex items-start">
+                  <RiErrorWarningLine className="mr-1 mt-0.5 flex-shrink-0" />
+                  <span>{errors.description}</span>
+                </div>
               )}
-            </button>
-          </div>
-        </form>
+            </div>
+
+            <div>
+              <label className="form-label flex items-center">
+                Categories <span className="text-red-500 ml-1">*</span>
+              </label>
+              <MultiSelect
+                options={categoryOptions}
+                value={selectedCategories}
+                onChange={setSelectedCategories}
+                labelledBy="Select categories"
+                className={`rounded-xl ${errors.categories ? 'border-red-500' : ''}`}
+                overrideStrings={{
+                  selectSomeItems: "Select product categories...",
+                  allItemsAreSelected: "All categories selected",
+                  noOptions: "No categories available",
+                }}
+              />
+              {errors.categories && (
+                <div className="mt-2 text-sm text-red-600 flex items-start">
+                  <RiErrorWarningLine className="mr-1 mt-0.5 flex-shrink-0" />
+                  <span>{errors.categories}</span>
+                </div>
+              )}
+            </div>
+
+            <div className="pt-6 border-t border-gray-100 flex justify-end">
+              <button
+                type="button"
+                onClick={() => navigate('/products')}
+                className="btn btn-secondary mr-3"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={submitting}
+                className="btn btn-primary min-w-[140px]"
+              >
+                {submitting ? (
+                  <div className="flex items-center justify-center">
+                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Saving...
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center">
+                    <RiSaveLine className="mr-2" />
+                    Add Product
+                  </div>
+                )}
+              </button>
+            </div>
+          </form>
+        )}
+      </div>
+      
+      <div className="mt-8 bg-blue-50 border border-blue-200 rounded-xl p-4 text-blue-800 text-sm">
+        <p className="font-medium mb-1">Tips:</p>
+        <ul className="list-disc list-inside space-y-1 pl-2">
+          <li>Product names must be unique</li>
+          <li>Choose at least one category</li>
+          <li>Provide a detailed description for better organization</li>
+        </ul>
       </div>
     </div>
   )
