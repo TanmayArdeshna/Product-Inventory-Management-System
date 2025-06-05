@@ -80,3 +80,67 @@
     }
   }
 }
+
+/* MultiSelect dropdown dark mode color fixes only */
+.dark .rmsc .dropdown-container {
+  background-color: #1f2937;
+  border-color: #4b5563;
+}
+
+.dark .rmsc .dropdown-heading {
+  color: #e5e7eb;
+}
+
+.dark .rmsc .dropdown-content {
+  background-color: #1f2937;
+  border-color: #4b5563;
+}
+
+.dark .rmsc .item-renderer:hover {
+  background-color: #374151;
+}
+
+.dark .rmsc .item-renderer input:checked {
+  background-color: #6366f1;
+}
+
+.dark .rmsc .item-renderer span {
+  color: #e5e7eb;
+}
+
+.dark .rmsc .search input {
+  color: #e5e7eb;
+  background-color: #1f2937;
+}
+
+.dark .rmsc .select-item {
+  background-color: #374151;
+  color: #e5e7eb;
+}
+
+/* Position icons properly */
+.input-icon-container {
+  position: relative;
+}
+
+.input-icon-container .input-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  z-index: 1;
+}
+
+.input-icon-container .textarea-icon {
+  position: absolute;
+  left: 10px;
+  top: 16px;
+  color: #9ca3af;
+  z-index: 1;
+}
+
+.dark .input-icon-container .input-icon,
+.dark .input-icon-container .textarea-icon {
+  color: #6b7280;
+}

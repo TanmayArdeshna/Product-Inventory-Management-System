@@ -91,6 +91,30 @@ const Dashboard = () => {
     }
   }
 
+  // Modify the handleClearFilters function
+  const handleClearFilters = async () => {
+    // Reset the state values
+    setSearchTerm('');
+    setSelectedCategories([]);
+    
+    // Directly call API with empty values instead of using the state values
+    try {
+      setLoading(true);
+      const result = await getProducts(1, limit, '', []);
+      setProducts(result.data);
+      setPagination({
+        currentPage: result.currentPage,
+        totalPages: result.totalPages,
+        totalProducts: result.totalProducts
+      });
+    } catch (error) {
+      toast.error('Failed to reset filters');
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div>
       {/* Header Section with animated gradient */}
@@ -202,11 +226,7 @@ const Dashboard = () => {
               )}
             </div>
             <button 
-              onClick={() => {
-                setSearchTerm('');
-                setSelectedCategories([]);
-                setTimeout(() => fetchProducts(1), 0);
-              }} 
+              onClick={handleClearFilters} // Use the new function
               className="text-sm flex items-center text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 px-2 py-1 rounded-full"
             >
               <RiRefreshLine className="mr-1" /> Clear filters
