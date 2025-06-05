@@ -112,32 +112,26 @@ const AddProduct = () => {
 
   return (
     <div className="max-w-3xl mx-auto">
-      {/* Enhanced header with gradient bg */}
-      <div className="relative overflow-hidden rounded-2xl mb-10 flex items-center">
-        <div className="absolute inset-0 bg-gradient-to-r from-secondary-600 to-primary-500"></div>
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+      <div className="flex items-center mb-8">
         <button 
           onClick={() => navigate('/products')} 
-          className="relative m-4 bg-white/20 backdrop-blur-sm text-white rounded-full p-2 hover:bg-white/30 transition"
+          className="mr-4 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 bg-white dark:bg-dark-800 rounded-full p-2 hover:bg-gray-100 dark:hover:bg-dark-700 transition"
           aria-label="Go back"
         >
           <RiArrowLeftLine size={20} />
         </button>
-        <h1 className="relative text-3xl font-bold text-white font-display py-8 pl-2 pr-8">
-          Add New Product
-        </h1>
+        <h1 className="section-heading dark:text-white">Add New Product</h1>
       </div>
 
-      <div className="card border-none shadow-lg">
+      <div className="card border-t-4 border-t-secondary-500 dark:border-t-secondary-600">
         {loading ? (
           <div className="flex justify-center py-12">
             <LoadingSpinner />
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Form fields with enhanced styling */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="relative">
+              <div className="input-icon-container">
                 <label htmlFor="name" className="form-label flex items-center">
                   Product Name <span className="text-red-500 ml-1">*</span>
                 </label>
@@ -147,21 +141,18 @@ const AddProduct = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className={`form-input pl-10 ${errors.name ? 'border-red-500 bg-red-50' : ''}`}
+                  className={`form-input pl-10 ${errors.name ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : ''}`}
                   placeholder="Enter product name"
                 />
-                <div className="absolute left-3 bottom-3 text-gray-400">
-                  <RiInformationLine />
-                </div>
                 {errors.name && (
-                  <div className="mt-2 text-sm text-red-600 flex items-start">
+                  <div className="mt-2 text-sm text-red-600 dark:text-red-400 flex items-start">
                     <RiErrorWarningLine className="mr-1 mt-0.5 flex-shrink-0" />
                     <span>{errors.name}</span>
                   </div>
                 )}
               </div>
 
-              <div className="relative">
+              <div className="input-icon-container">
                 <label htmlFor="quantity" className="form-label flex items-center">
                   Quantity <span className="text-red-500 ml-1">*</span>
                 </label>
@@ -172,14 +163,11 @@ const AddProduct = () => {
                   value={formData.quantity}
                   onChange={handleChange}
                   min="0"
-                  className={`form-input pl-10 ${errors.quantity ? 'border-red-500 bg-red-50' : ''}`}
+                  className={`form-input pl-10 ${errors.quantity ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : ''}`}
                   placeholder="Enter quantity"
                 />
-                <div className="absolute left-3 bottom-3 text-gray-400">
-                  <RiInformationLine />
-                </div>
                 {errors.quantity && (
-                  <div className="mt-2 text-sm text-red-600 flex items-start">
+                  <div className="mt-2 text-sm text-red-600 dark:text-red-400 flex items-start">
                     <RiErrorWarningLine className="mr-1 mt-0.5 flex-shrink-0" />
                     <span>{errors.quantity}</span>
                   </div>
@@ -187,7 +175,7 @@ const AddProduct = () => {
               </div>
             </div>
 
-            <div className="relative">
+            <div className="input-icon-container">
               <label htmlFor="description" className="form-label flex items-center">
                 Description <span className="text-red-500 ml-1">*</span>
               </label>
@@ -196,14 +184,11 @@ const AddProduct = () => {
                 name="description"
                 value={formData.description}
                 onChange={handleChange}
-                className={`form-input min-h-[120px] resize-none pl-10 ${errors.description ? 'border-red-500 bg-red-50' : ''}`}
+                className={`form-input min-h-[120px] resize-none pl-10 ${errors.description ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : ''}`}
                 placeholder="Enter product description"
               ></textarea>
-              <div className="absolute left-3 top-10 text-gray-400">
-                <RiInformationLine />
-              </div>
               {errors.description && (
-                <div className="mt-2 text-sm text-red-600 flex items-start">
+                <div className="mt-2 text-sm text-red-600 dark:text-red-400 flex items-start">
                   <RiErrorWarningLine className="mr-1 mt-0.5 flex-shrink-0" />
                   <span>{errors.description}</span>
                 </div>
@@ -224,10 +209,12 @@ const AddProduct = () => {
                   selectSomeItems: "Select product categories...",
                   allItemsAreSelected: "All categories selected",
                   noOptions: "No categories available",
+                  search: "Search categories...",
+                  selectAll: "Select All Categories"
                 }}
               />
               {errors.categories && (
-                <div className="mt-2 text-sm text-red-600 flex items-start">
+                <div className="mt-2 text-sm text-red-600 dark:text-red-400 flex items-start">
                   <RiErrorWarningLine className="mr-1 mt-0.5 flex-shrink-0" />
                   <span>{errors.categories}</span>
                 </div>
@@ -235,18 +222,18 @@ const AddProduct = () => {
             </div>
 
             {/* Improved buttons with gradient effect */}
-            <div className="pt-6 border-t border-gray-100 flex justify-end">
+            <div className="pt-6 border-t border-gray-100 dark:border-dark-700 flex justify-end">
               <button
                 type="button"
                 onClick={() => navigate('/products')}
-                className="btn btn-secondary mr-3 hover:bg-gray-100"
+                className="btn btn-secondary mr-3"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={submitting}
-                className="btn bg-gradient-to-r from-primary-600 to-secondary-600 text-white min-w-[140px] hover:from-primary-700 hover:to-secondary-700"
+                className="btn btn-primary min-w-[140px]"
               >
                 {submitting ? (
                   <div className="flex items-center justify-center">
@@ -269,23 +256,12 @@ const AddProduct = () => {
       </div>
       
       {/* Enhanced tips card */}
-      <div className="mt-8 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-5 text-blue-800 text-sm border border-blue-100 shadow-sm">
-        <p className="font-medium mb-2 flex items-center text-indigo-800">
-          <RiInformationLine size={18} className="mr-1.5" /> Tips for adding products:
-        </p>
-        <ul className="space-y-1.5 pl-6">
-          <li className="flex items-start">
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-blue-600 mt-1.5 mr-2"></span>
-            Product names must be unique across your inventory
-          </li>
-          <li className="flex items-start">
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-blue-600 mt-1.5 mr-2"></span>
-            Choose at least one category to help with organization
-          </li>
-          <li className="flex items-start">
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-blue-600 mt-1.5 mr-2"></span>
-            Provide a detailed description for better inventory management
-          </li>
+      <div className="mt-8 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-4 text-blue-800 dark:text-blue-300 text-sm">
+        <p className="font-medium mb-1">Tips:</p>
+        <ul className="list-disc list-inside space-y-1 pl-2">
+          <li>Product names must be unique</li>
+          <li>Choose at least one category</li>
+          <li>Provide a detailed description for better organization</li>
         </ul>
       </div>
     </div>

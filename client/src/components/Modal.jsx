@@ -36,17 +36,17 @@ const Modal = ({ isOpen, onClose, title, children, footer }) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
       <div 
         ref={modalRef}
-        className="bg-white rounded-2xl shadow-elegant w-full max-w-md mx-4 animate-fade-in-up"
+        className="bg-white dark:bg-dark-800 rounded-2xl shadow-elegant w-full max-w-md mx-4 animate-fade-in-up"
       >
         {title && (
-          <div className="px-6 py-4 border-b border-gray-100">
-            <h3 className="font-display text-xl font-semibold text-gray-900">{title}</h3>
+          <div className="px-6 py-4 border-b border-gray-100 dark:border-dark-700">
+            <h3 className="font-display text-xl font-semibold text-gray-900 dark:text-white">{title}</h3>
           </div>
         )}
         
-        <div className="px-6 py-5">{children}</div>
+        <div className="px-6 py-5 text-gray-700 dark:text-gray-300">{children}</div>
         
-        {footer && <div className="px-6 py-4 border-t border-gray-100 flex justify-end">{footer}</div>}
+        {footer && <div className="px-6 py-4 border-t border-gray-100 dark:border-dark-700 flex justify-end">{footer}</div>}
       </div>
     </div>,
     document.body

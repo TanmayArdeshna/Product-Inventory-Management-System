@@ -4,7 +4,7 @@ import Footer from './Footer'
 
 const Layout = () => {
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
+    <div className="flex flex-col min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-dark-900 dark:to-dark-950 transition-colors duration-300">
       <Navbar />
       <main className="flex-grow container mx-auto px-4 py-8 sm:px-6 lg:px-8 max-w-7xl">
         <Outlet />

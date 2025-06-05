@@ -52,8 +52,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange, totalItems, itemsPe
   const endItem = Math.min(currentPage * itemsPerPage, totalItems)
 
   return (
-    <div className="flex flex-col sm:flex-row justify-between items-center border-t border-gray-200 pt-6 mt-8">
-      <div className="text-sm text-gray-600 mb-4 sm:mb-0 bg-white px-4 py-2 rounded-full shadow-sm">
+    <div className="flex flex-col sm:flex-row justify-between items-center border-t border-gray-200 dark:border-dark-700 pt-6 mt-8">
+      <div className="text-sm text-gray-600 dark:text-gray-400 mb-4 sm:mb-0 bg-white dark:bg-dark-800 px-4 py-2 rounded-full shadow-sm">
         Showing <span className="font-medium">{startItem}</span> to <span className="font-medium">{endItem}</span> of{' '}
         <span className="font-medium">{totalItems}</span> products
       </div>
@@ -64,8 +64,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange, totalItems, itemsPe
           disabled={currentPage === 1}
           className={`p-2 rounded-full ${
             currentPage === 1
-              ? 'text-gray-300 cursor-not-allowed'
-              : 'text-gray-700 hover:bg-primary-100 hover:text-primary-700'
+              ? 'text-gray-300 dark:text-gray-600 cursor-not-allowed'
+              : 'text-gray-700 dark:text-gray-300 hover:bg-primary-100 dark:hover:bg-primary-900/30 hover:text-primary-700 dark:hover:text-primary-400'
           }`}
           aria-label="Previous page"
         >
@@ -74,15 +74,15 @@ const Pagination = ({ currentPage, totalPages, onPageChange, totalItems, itemsPe
 
         {pageNumbers.map((page, index) => (
           page === '...' ? (
-            <span key={`ellipsis-${index}`} className="px-2 py-1 text-gray-400">...</span>
+            <span key={`ellipsis-${index}`} className="px-2 py-1 text-gray-400 dark:text-gray-500">...</span>
           ) : (
             <button
               key={`page-${page}`}
               onClick={() => onPageChange(page)}
               className={`w-10 h-10 flex items-center justify-center rounded-full transition-all duration-200 ${
                 currentPage === page
-                  ? 'bg-primary-600 text-white font-medium shadow-md'
-                  : 'text-gray-700 hover:bg-primary-100 hover:text-primary-700'
+                  ? 'bg-primary-600 dark:bg-primary-700 text-white font-medium shadow-md'
+                  : 'text-gray-700 dark:text-gray-300 hover:bg-primary-100 dark:hover:bg-primary-900/30 hover:text-primary-700 dark:hover:text-primary-400'
               }`}
             >
               {page}
@@ -95,8 +95,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange, totalItems, itemsPe
           disabled={currentPage === totalPages}
           className={`p-2 rounded-full ${
             currentPage === totalPages
-              ? 'text-gray-300 cursor-not-allowed'
-              : 'text-gray-700 hover:bg-primary-100 hover:text-primary-700'
+              ? 'text-gray-300 dark:text-gray-600 cursor-not-allowed'
+              : 'text-gray-700 dark:text-gray-300 hover:bg-primary-100 dark:hover:bg-primary-900/30 hover:text-primary-700 dark:hover:text-primary-400'
           }`}
           aria-label="Next page"
         >

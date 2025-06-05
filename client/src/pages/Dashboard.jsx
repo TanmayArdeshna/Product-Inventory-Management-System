@@ -152,7 +152,7 @@ const Dashboard = () => {
         <div className="flex flex-col md:flex-row md:items-end space-y-6 md:space-y-0 md:space-x-6">
           <div className="flex-1">
             <label htmlFor="search" className="form-label flex items-center">
-              <RiSearchLine className="mr-1.5 text-primary-500" />
+              <RiSearchLine className="mr-1.5 text-primary-500 dark:text-primary-400" />
               Search Products
             </label>
             <form onSubmit={handleSearch} className="flex">
@@ -166,7 +166,7 @@ const Dashboard = () => {
               />
               <button 
                 type="submit" 
-                className="px-4 py-2 bg-primary-600 text-white rounded-r-xl border-l-0 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+                className="px-4 py-2 bg-primary-600 dark:bg-primary-700 text-white rounded-r-xl border-l-0 hover:bg-primary-700 dark:hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-dark-900"
               >
                 Search
               </button>
@@ -174,7 +174,7 @@ const Dashboard = () => {
           </div>
           <div className="w-full md:w-2/5">
             <div className="flex items-center space-x-2 mb-1">
-              <RiFilterLine className="text-primary-500" />
+              <RiFilterLine className="text-primary-500 dark:text-primary-400" />
               <label className="form-label m-0">Filter by Categories</label>
             </div>
             <MultiSelect
@@ -182,18 +182,20 @@ const Dashboard = () => {
               value={selectedCategories}
               onChange={handleCategoryChange}
               labelledBy="Select categories"
-              className="rounded-xl"
+              className="rounded-xl dark-select"
               overrideStrings={{
                 selectSomeItems: "Select categories...",
                 allItemsAreSelected: "All categories selected",
+                search: "Search categories...",
+                selectAll: "Select All Categories"
               }}
             />
           </div>
         </div>
         
         {(searchTerm || selectedCategories.length > 0) && (
-          <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
-            <div className="text-sm text-gray-600">
+          <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100 dark:border-dark-700">
+            <div className="text-sm text-gray-600 dark:text-gray-400">
               {searchTerm && <span className="mr-2">Search: <span className="font-semibold">{searchTerm}</span></span>}
               {selectedCategories.length > 0 && (
                 <span>Categories: {selectedCategories.map(c => c.label).join(', ')}</span>
@@ -205,7 +207,7 @@ const Dashboard = () => {
                 setSelectedCategories([]);
                 setTimeout(() => fetchProducts(1), 0);
               }} 
-              className="text-sm flex items-center text-primary-600 hover:text-primary-800 hover:bg-primary-50 px-2 py-1 rounded-full"
+              className="text-sm flex items-center text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 px-2 py-1 rounded-full"
             >
               <RiRefreshLine className="mr-1" /> Clear filters
             </button>
@@ -221,13 +223,13 @@ const Dashboard = () => {
       ) : (
         <>
           {products.length === 0 ? (
-            <div className="card text-center py-16 border border-dashed border-gray-300">
+            <div className="card text-center py-16 border border-dashed border-gray-300 dark:border-dark-700">
               <img
                 src="https://illustrations.popsy.co/amber/no-data.svg"
                 alt="No products"
-                className="w-64 h-64 mx-auto mb-6 opacity-75"
+                className="w-64 h-64 mx-auto mb-6 opacity-75 dark:opacity-50"
               />
-              <p className="text-gray-500 mb-6 text-lg">No products found</p>
+              <p className="text-gray-500 dark:text-gray-400 mb-6 text-lg">No products found</p>
               <Link to="/products/add" className="btn btn-primary inline-flex items-center">
                 <RiAddLine className="mr-1.5" />
                 Add Your First Product

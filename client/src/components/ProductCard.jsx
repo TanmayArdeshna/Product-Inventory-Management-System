@@ -26,23 +26,23 @@ const ProductCard = ({ product, onDelete }) => {
     <>
       <div className="card group overflow-hidden">
         <div className="flex justify-between items-start mb-3">
-          <h3 className="font-semibold text-lg text-gray-900 group-hover:text-primary-600 transition duration-200">{product.name}</h3>
+          <h3 className="font-semibold text-lg text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition duration-200">{product.name}</h3>
           <button 
             onClick={handleDelete} 
-            className="text-gray-400 hover:text-red-600 hover:bg-red-50 p-1.5 rounded-full transition duration-200"
+            className="text-gray-400 dark:text-gray-500 hover:text-red-600 dark:hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 p-1.5 rounded-full transition duration-200"
             aria-label="Delete product"
           >
             <RiDeleteBinLine size={18} />
           </button>
         </div>
         
-        <p className="text-gray-600 text-sm mb-4 line-clamp-2 group-hover:line-clamp-none transition-all duration-300">{product.description}</p>
+        <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-2 group-hover:line-clamp-none transition-all duration-300">{product.description}</p>
         
         <div className="flex items-center mb-4">
-          <span className="inline-flex items-center justify-center p-1.5 bg-primary-100 text-primary-800 rounded-full mr-2">
+          <span className="inline-flex items-center justify-center p-1.5 bg-primary-100 dark:bg-primary-900/50 text-primary-800 dark:text-primary-300 rounded-full mr-2">
             <RiInformationLine size={16} />
           </span>
-          <span className="text-sm font-medium text-gray-700">{product.quantity} in stock</span>
+          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{product.quantity} in stock</span>
         </div>
         
         <div className="mb-4">
@@ -50,7 +50,7 @@ const ProductCard = ({ product, onDelete }) => {
             {product.categories.map(category => (
               <span 
                 key={category._id} 
-                className="badge bg-secondary-100/70 text-secondary-800 border border-secondary-200"
+                className="badge bg-secondary-100/70 dark:bg-secondary-900/30 text-secondary-800 dark:text-secondary-300 border border-secondary-200 dark:border-secondary-800"
               >
                 {category.name}
               </span>
@@ -58,7 +58,7 @@ const ProductCard = ({ product, onDelete }) => {
           </div>
         </div>
         
-        <div className="pt-3 border-t border-gray-100 text-xs text-gray-500">
+        <div className="pt-3 border-t border-gray-100 dark:border-dark-700 text-xs text-gray-500 dark:text-gray-400">
           <span>Added on {formattedDate}</span>
         </div>
       </div>
