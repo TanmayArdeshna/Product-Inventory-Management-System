@@ -90,22 +90,38 @@ const getProducts = async (req, res) => {
     }
     
     // Filter by categories
+    let categoryIds = [];
     if (req.query.categories) {
-      const categoryIds = Array.isArray(req.query.categories) 
-        ? req.query.categories 
-        : req.query.categories.split(',');
-      query.categories = { $in: categoryIds };
+      try {
+        categoryIds = Array.isArray(req.query.categories) 
+          ? req.query.categories 
+          : req.query.categories.split(',').filter(id => mongoose.Types.ObjectId.isValid(id));
+      } catch (error) {
+        // If invalid format, use empty array rather than crashing
+        categoryIds = [];
+      }
+      
+      if (categoryIds.length > 0) {
+        query.categories = { $in: categoryIds };
+      }
     }
     
     // Count total documents for pagination info
     const total = await Product.countDocuments(query);
     
+    // Fallback for sorting (performance and scaling)
+    const sortField = req.query.sortBy || 'createdAt';
+    const sortOrder = req.query.sortOrder === 'asc' ? 1 : -1;
+    const sortOptions = {};
+    sortOptions[sortField] = sortOrder;
+    
     // Get products
     const products = await Product.find(query)
       .populate('categories', 'name')
-      .sort({ createdAt: -1 })
+      .sort(sortOptions)
       .skip(skip)
-      .limit(limit);
+      .limit(limit)
+      .lean(); // Use lean() for better performance with large datasets
     
     res.status(200).json({
       success: true,
@@ -116,9 +132,11 @@ const getProducts = async (req, res) => {
       data: products
     });
   } catch (error) {
+    // Add more detailed logging for production troubleshooting
+    console.error(`Error fetching products: ${error.message}`);
     res.status(500).json({
       success: false,
-      message: error.message
+      message: 'Failed to fetch products. Please try again later.'
     });
   }
 };
@@ -137,25 +155,26 @@ const deleteProduct = async (req, res) => {
       });
     }
     
-    const product = await Product.findById(id);
+    // Use findByIdAndDelete with safeguards
+    const deletedProduct = await Product.findByIdAndDelete(id);
     
-    if (!product) {
+    if (!deletedProduct) {
       return res.status(404).json({
         success: false,
-        message: 'Product not found'
+        message: 'Product not found or already deleted'
       });
     }
-    
-    await Product.findByIdAndDelete(id);
     
     res.status(200).json({
       success: true,
       message: 'Product deleted successfully'
     });
   } catch (error) {
+    // Add more context to the error message
+    console.error(`Error deleting product ${req.params.id}: ${error.message}`);
     res.status(500).json({
       success: false,
-      message: error.message
+      message: 'Failed to delete product. Please try again later.'
     });
   }
 };
@@ -179,9 +198,21 @@ const getCategories = async (req, res) => {
   }
 };
 
+// @desc    Check API health
+// @route   GET /api/health
+// @access  Public
+const healthCheck = (req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    message: 'API is running',
+    timestamp: new Date()
+  });
+};
+
 module.exports = {
   createProduct,
   getProducts,
   deleteProduct,
-  getCategories
+  getCategories,
+  healthCheck  // Add this to exports
 };
